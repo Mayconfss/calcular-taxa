@@ -68,6 +68,14 @@
                 color: white;
             }
 
+            #resultado{
+                color: white;
+            }
+
+            p{
+                font-size: 20px;
+            }
+
                     /* Estilo para dispositivos móveis */
             @media (max-width: 768px) {
                 div {
@@ -138,7 +146,7 @@
         <input type="text" id="cobrar" placeholder="0,00" inputmode="decimal" pattern="[0-9]*">
     </div>
 
-    <div id="linha"></div><br>
+    <div id="linha"></div>
      
     <div>
         <label for="resultado" id="resultado"></label>
@@ -241,6 +249,8 @@
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
         });
+
+        exibirResultado(valorCobrar, valorReceber);
     }
 
     function calcularValorReceber(taxa) {
@@ -253,6 +263,20 @@
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
         });
+
+        exibirResultado(valorCobrar, valorReceber);
+    }
+
+    function exibirResultado(valorCobrar, valorReceber) {
+        const numParcelas = parseInt(document.getElementById('numparcelas').value);
+        const valorParcela = valorCobrar / numParcelas;
+        const totalJuros = valorCobrar - valorReceber;
+
+        const resultadoDiv = document.getElementById('resultado');
+        resultadoDiv.innerHTML = `
+            <p><strong>${numParcelas} x R$ ${valorParcela.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong></p>
+            <p>Total de Juros em ${numParcelas} parcelas: <strong>R$ ${totalJuros.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong></p>
+        `;
     }
 
     // Eventos para recalcular valores ao mudar parcelas ou bandeira
